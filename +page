@@ -1,0 +1,92 @@
+
+
+<script lang="ts">
+	import { onMount } from "svelte";
+import { testjson } from "$src/stores/store1";
+
+// let root;
+let iFrame,iFrame2, jsTextArea, htmlTextArea, cssTextArea, opop, getEl
+let htmlval, cssval, jsval
+// let jsTextArea
+
+onMount(async () => {
+  getEl = id => document.getElementById(id)
+// opop = getEl('iFrame').contentWindow
+// console.log(opop)
+  iFrame = getEl('iFrame').contentWindow.document
+  // iFrame2 = getEl('iFrame2').contentWindow.document
+htmlTextArea = getEl('htmlTextarea')
+cssTextArea = getEl('cssTextarea')
+jsTextArea = getEl('jsTextarea')
+
+document.querySelector(`iFrame`).setAttribute("style", "background-color:white")
+// var iframe =  document.querySelector(`iFrame`);
+// var doc = iframe.contentDocument;
+//     var style = doc.createElement("style");
+//     style.textContent = `body {color:white;}`;
+//     doc.head.append(style);
+
+document.body.onkeyup = function() {
+    opop=iFrame.open()
+    // iFrame2.open()
+    // iFrame.writeln(
+    //     htmlTextArea.value +
+    //     '<style>' +
+    //     cssTextArea.value +
+    //     '</style>' 
+    // )
+    // iFrame.close()
+}
+
+})
+
+$: resulttext = jsTextArea?.value
+
+
+
+</script>
+
+
+
+<div class="twitter-card">
+<h3>HTML/CSS/JS Playground</h3>
+
+<p>HTML</p>
+<textarea rows="5" cols="40" id="htmlTextarea" bind:value={htmlval} on:change={() => iFrame.writeln(
+  htmlval +
+        `<style>` +
+          cssval +
+        `</style>` +
+    `<script>` +
+      jsval +
+    `</script>`
+)}></textarea>
+{htmlval}
+<p>CSS</p>
+<textarea rows="5" cols="40" bind:value={cssval} id="cssTextarea" on:change={() => iFrame.writeln(
+  htmlval +
+        `<style>` +
+          cssval +
+        `</style>` +
+    `<script>` +
+      jsval +
+    `</script>`
+)}></textarea>
+
+<p>Javascript</p>
+  <textarea rows="5" cols="40" bind:value={jsval} on:change={() => iFrame.writeln(
+  htmlval +
+        `<style>` +
+          cssval +
+        `</style>` +
+    `<script>` +
+      jsval +
+    `</script>`
+)} id="jsTextarea"></textarea>
+
+<p>HTML + CSS Result</p>
+                  <iframe style="color: white;" id="iFrame"></iframe>
+
+                </div>
+
+            
